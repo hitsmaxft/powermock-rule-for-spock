@@ -1,0 +1,1 @@
+# powermock-rule-for-spock
