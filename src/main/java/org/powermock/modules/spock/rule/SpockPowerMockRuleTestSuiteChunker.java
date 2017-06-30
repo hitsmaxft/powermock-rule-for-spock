@@ -25,9 +25,9 @@ import org.powermock.tests.utils.impl.AbstractCommonTestSuiteChunkerImpl;
  *
  * @author hitsmaxft
  */
-public class PowerMockRuleTestSuiteChunker extends AbstractCommonTestSuiteChunkerImpl {
+public class SpockPowerMockRuleTestSuiteChunker extends AbstractCommonTestSuiteChunkerImpl {
 
-    public PowerMockRuleTestSuiteChunker(Class testClass) throws Exception {
+    public SpockPowerMockRuleTestSuiteChunker(Class testClass) throws Exception {
         super(testClass);
     }
 

@@ -49,7 +49,7 @@ public class SpockPowerMockRule implements MethodRule {
         if (isNotRuleInitialized(target)) {
             init(target);
 		}
-		return new PowerMockStatement(
+		return new SpockPowerMockStatement(
 			base,
             (Specification)target,
             testSuiteChunker.getTestChunk(method.getMethod()),
@@ -64,7 +64,7 @@ public class SpockPowerMockRule implements MethodRule {
 
         try {
             mockPolicyInitializer = new MockPolicyInitializerImpl(testClass);
-            testSuiteChunker = new PowerMockRuleTestSuiteChunker(testClass);
+            testSuiteChunker = new SpockPowerMockRuleTestSuiteChunker(testClass);
             previousTargetClass = target.getClass();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -72,22 +72,18 @@ public class SpockPowerMockRule implements MethodRule {
     }
 }
 
-/**
- * aop spock 的 feature 方法
- */
-class PowerMockStatement extends Statement {
+class SpockPowerMockStatement extends Statement {
 	private final Statement fNext;
     private final ClassloaderExecutor classloaderExecutor;
 	private final MockPolicyInitializer mockPolicyInitializer;
 
-    public PowerMockStatement(final Statement featureInvokeStatement,
-                              final Specification target, TestChunk testChunk,
-                              MockPolicyInitializer mockPolicyInitializer) {
+    public SpockPowerMockStatement(final Statement featureInvokeStatement,
+                                   final Specification target, TestChunk testChunk,
+                                   MockPolicyInitializer mockPolicyInitializer) {
         this.fNext = new Statement() {
 			@Override
 			public void evaluate() throws Throwable {
-			    //spec 中的所有特殊方法都需要修改访问权限
-                //由于运行的类加载器被更改了， private 方法访问权限被重置了
+			    //reopen all private setup/cleanup methods
                 List<MethodInfo> allMethods = new LinkedList<MethodInfo>();
 
                 allMethods.addAll(target.getSpecificationContext().getCurrentSpec().getSetupMethods());

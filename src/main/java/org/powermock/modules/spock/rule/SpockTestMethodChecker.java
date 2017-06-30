@@ -23,8 +23,7 @@ import org.powermock.modules.junit4.common.internal.impl.JUnit4TestMethodChecker
 import org.spockframework.runtime.model.FeatureMetadata;
 
 /**
- * 覆写了部分行为， 正确判断 spock 中的测试方法
- *
+ * add test method filtering for spock feature
  * @author qixiang.mft
  */
 public class SpockTestMethodChecker extends JUnit4TestMethodChecker {
